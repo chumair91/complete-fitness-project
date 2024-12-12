@@ -1,0 +1,11 @@
+module-info.class
+com\example\ApiFetcher.class
+com\example\App.class
+com\example\UserData.class
+com\example\BMICalculatorAPI.class
+com\example\PrimaryController.class
+com\example\NewFile.class
+com\example\NutritionAPI.class
+com\example\NutritionDataHandler.class
+com\example\SecondaryController.class
+com\example\FitnessAPI.class

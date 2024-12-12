@@ -1,0 +1,55 @@
+{
+      // Use IntelliSense to learn about possible attributes.
+      // Hover to view descriptions of existing attributes.
+      // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+      "version": "0.2.0",
+      "configurations": [
+            {
+                  "type": "java",
+                  "name": "Sound",
+                  "request": "launch",
+                  "mainClass": "com.example/com.example.Sound",
+                  "projectName": "table_tut2"
+            },
+            {
+                  "type": "java",
+                  "name": "ApiFetcher",
+                  "request": "launch",
+                  "mainClass": "com.example/com.example.ApiFetcher",
+                  "projectName": "table_tut2"
+            },
+            {
+                  "type": "java",
+                  "name": "BMICalculatorApp",
+                  "request": "launch",
+                  "mainClass": "com.example/com.example.BMICalculatorApp",
+                  "projectName": "table_tut2"
+            },
+            {
+                  "type": "java",
+                  "name": "BMICalculatorAPI",
+                  "request": "launch",
+                  "mainClass": "com.example/com.example.BMICalculatorAPI",
+                  "projectName": "table_tut2"
+            },
+            {
+                  "type": "java",
+                  "name": "Currency",
+                  "request": "launch",
+                  "mainClass": "com.example/com.example.Currency",
+                  "projectName": "table_tut2"
+            },
+            {
+                  "type": "java",
+                  "name": "App",
+                  "request": "launch",
+                  "mainClass": "com.example/com.example.App",
+                  "projectName": "table_tut2"
+            },
+            {
+                  "type": "jdk",
+                  "request": "launch",
+                  "name": "Launch Java App"
+            }
+      ]
+}
