@@ -14,8 +14,11 @@ public class NewFile {
     File file;
 
     public NewFile() {
-
-        file = new File("C:\\Users\\DELL\\Music\\table_tut2\\src\\main\\resources\\com\\example", "Data.txt");
+         File dir=new File("C:\\Users\\DELL\\Videos\\table_tut2\\src\\main\\resources\\com\\example");
+         if (!(dir.exists())) {
+            dir.mkdirs();
+         }
+        file = new File(dir, "Data.txt");
         try {
             file.createNewFile();
         } catch (Exception j) {

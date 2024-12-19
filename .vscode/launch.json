@@ -6,6 +6,20 @@
       "configurations": [
             {
                   "type": "java",
+                  "name": "Launch HeavyApp",
+                  "request": "launch",
+                  "mainClass": "com.example/com.example.HeavyApp",
+                  "projectName": "table_tut2"
+            },
+            {
+                  "type": "java",
+                  "name": "VideoHandler",
+                  "request": "launch",
+                  "mainClass": "com.example/com.example.VideoHandler",
+                  "projectName": "table_tut2"
+            },
+            {
+                  "type": "java",
                   "name": "Sound",
                   "request": "launch",
                   "mainClass": "com.example/com.example.Sound",

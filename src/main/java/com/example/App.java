@@ -50,8 +50,7 @@ public class App extends Application {
     // Apply the CSS class
     // Welcome
     // Label wlcmLabel=new Label("Welcome to fitness journey");
-    Image newWlcmImg = new Image(
-        "file:C://Users//DELL//Music//table_tut2//src//main//resources//com//example//homepage.png/");
+    Image newWlcmImg = new Image(getClass().getResource("homepage.png").toExternalForm());
     ImageView newImageView = new ImageView(newWlcmImg);
     newImageView.setFitHeight(350);
 
@@ -118,7 +117,7 @@ public class App extends Application {
         "file:C://Users//DELL//Documents//java ntoepad//table_tut2//src//main//resources//com//example//logo.jpg");
 
     // help button on action
-    Scene scene1 = new Scene(layout,350,600);
+    Scene scene1 = new Scene(layout, 350, 600);
 
     scene1.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
     primaryStage.getIcons().add(logoimage);
@@ -157,10 +156,10 @@ public class App extends Application {
     // login method label
     Label loginMethodLabel = new Label("login with the following methods");
     loginMethodLabel.setId("loginMethodLabel");
-    // loginMethodLabel.setTranslateX(50);
+    //
     HBox loginLabelHbox = new HBox(loginMethodLabel);
     loginLabelHbox.setAlignment(Pos.CENTER);
-    // VBox.setMargin(loginMethodLabel, new Insets(0, 0, 10, 65));
+
     // login buttons
     Button googleButton = new Button("");
     Button facebookButton = new Button("");
@@ -318,6 +317,7 @@ public class App extends Application {
     borderLayout.setCenter(accessVBox);
 
     borderLayout.requestLayout();
+
     signInBtn.setOnAction(e -> {
 
       String name = nameField.getText().trim();
@@ -364,62 +364,104 @@ public class App extends Application {
   public void ForgetPasswordMethod() {
     VBox forgetVbox = new VBox(15);
     forgetVbox.setAlignment(Pos.CENTER);
-    // button
-    Button backButton = new Button("<-");
-    backButton.getStyleClass().add("backButtonStyle");
-    backButton.setOnAction(e -> AcessPage());
+    forgetVbox.setPadding(new Insets(20)); // Add padding around the VBox
+    forgetVbox.setStyle("-fx-background-color: linear-gradient(to bottom, #ece9e6, #ffffff);"); // Gradient background
 
+    // Back button
+    Button backButton = new Button("");
+    // backButton.getStyleClass().add("backButtonStyle");
+    backButton.setOnAction(e -> AcessPage());
+   
+    String imgPath=getClass().getResource("backBtn.png").toExternalForm();
+    Image backImg=new Image(imgPath);
+    ImageView backImageView=new ImageView(backImg);
+    backImageView.setFitWidth(30);
+    backImageView.setFitHeight(30);
+    backButton.setGraphic(backImageView);
+
+    // Email label and field
     Label emailforgetLabel = new Label("Email");
+    emailforgetLabel.getStyleClass().add("newLabelStyling");
+    emailforgetLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
     TextField emailForget = new TextField();
     emailForget.setPromptText("Enter your email");
+    emailForget.setMaxWidth(250); // Control field width
+    emailForget.setStyle("-fx-border-color: #0078D7; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-padding: 5px;");
 
+    // Movie label and field
     Label movieLabel = new Label("Which was your Favourite childhood movie?");
+    movieLabel.getStyleClass().add("newLabelStyling");
+    movieLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
     TextField movieField = new TextField();
     movieField.setPromptText("Enter the movie name here");
+    movieField.setMaxWidth(250); // Control field width
+    movieField.setStyle("-fx-border-color: #0078D7; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-padding: 5px;");
 
+    // School label and field
     Label schoolLabel = new Label("Plz Tell Us Name of Your First School?");
+    schoolLabel.getStyleClass().add("newLabelStyling");
+    schoolLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
     TextField schoolField = new TextField();
     schoolField.setPromptText("Enter the school name here");
+    schoolField.setMaxWidth(250); // Control field width
+    schoolField.setStyle("-fx-border-color: #0078D7; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-padding: 5px;");
 
+    // Reset button
     Button resetBtn = new Button("Proceed");
+    resetBtn.setMaxWidth(200); // Control button width
+    resetBtn.setStyle("-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px;");
+
     resetBtn.setOnKeyPressed(event -> {
-      if (event.getCode() == KeyCode.ENTER) {
+        if (event.getCode() == KeyCode.ENTER) {
+            String email = emailForget.getText().trim();
+            String school = schoolField.getText().trim();
+            String movie = movieField.getText().trim();
+            if (dataFile.checkUser(email, school, movie)) {
+                ResetPassword(email);
+            } else {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("NO User registered");
+                alert.setHeaderText("NO User found");
+                alert.setContentText("You are not registered in our database");
+                alert.showAndWait();
+            }
+        }
+    });
+    resetBtn.setOnAction(e -> {
         String email = emailForget.getText().trim();
         String school = schoolField.getText().trim();
         String movie = movieField.getText().trim();
         if (dataFile.checkUser(email, school, movie)) {
-          ResetPassword(email);
+            ResetPassword(email);
         } else {
-          Alert alert = new Alert(AlertType.ERROR);
-          alert.setTitle("NO User registered");
-          alert.setHeaderText("NO User found");
-          alert.setContentText("You are not registered in our database");
-          alert.showAndWait();
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("NO User registered");
+            alert.setHeaderText("NO User found");
+            alert.setContentText("You are not registered in our database");
+            alert.showAndWait();
         }
-      }
     });
-    resetBtn.setOnAction(e -> {
-      String email = emailForget.getText().trim();
-      String school = schoolField.getText().trim();
-      String movie = movieField.getText().trim();
-      if (dataFile.checkUser(email, school, movie)) {
-        ResetPassword(email);
-      } else {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("NO User registered");
-        alert.setHeaderText("NO User found");
-        alert.setContentText("You are not registered in our database");
-        alert.showAndWait();
-      }
-    });
-    forgetVbox.getChildren().addAll(backButton, emailforgetLabel, emailForget, schoolLabel, schoolField, movieLabel,
-        movieField, resetBtn);
-    Scene scene = new Scene(forgetVbox, 350, 600);
-    primaryStage.setTitle("forget Password");
+
+    // Add all components to the VBox
+    forgetVbox.getChildren().addAll(
+        backButton,
+        emailforgetLabel, emailForget,
+        schoolLabel, schoolField,
+        movieLabel, movieField,
+        resetBtn
+    );
+
+    // Set the scene and stage
+    Scene scene = new Scene(forgetVbox, 400, 600);
+    scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+    primaryStage.setTitle("Forget Password");
     primaryStage.setScene(scene);
     primaryStage.show();
-    // primaryStage.setFullScreen(true);
-  }
+}
+
 
   public void ResetPassword(String email) {
     VBox resVBox = new VBox();
@@ -427,18 +469,27 @@ public class App extends Application {
     resVBox.setAlignment(Pos.CENTER);
     String newEmail = email;
     // button
-    Button backButton = new Button("<-");
-    backButton.getStyleClass().add("backButtonStyle");
+    Button backButton = new Button("");
+   
+    String imgPath=getClass().getResource("backBtn.png").toExternalForm();
+    Image backImg=new Image(imgPath);
+    ImageView backImageView=new ImageView(backImg);
+    backImageView.setFitWidth(30);
+    backImageView.setFitHeight(30);
+    backButton.setGraphic(backImageView);
     backButton.setOnAction(e -> AcessPage());
 
     Label newPasswordLabel = new Label("New Password");
-
+    newPasswordLabel.getStyleClass().add("newLabelStyling");
     TextField newPasswordField = new TextField();
+    newPasswordField.setMaxWidth(200);
     newPasswordField.setPromptText("Enter a new password");
 
     Label confirmPasswordLabel = new Label("Confirm Password");
+    confirmPasswordLabel.getStyleClass().add("newLabelStyling");
     TextField confirmPasswordField = new TextField();
-
+    confirmPasswordField.setMaxWidth(200);
+    confirmPasswordField.setPromptText("confirm password");
     Button proceedButton = new Button("Proceed");
     resVBox.getChildren().addAll(backButton, newPasswordLabel, newPasswordField, confirmPasswordLabel,
         confirmPasswordField, proceedButton);
@@ -487,6 +538,7 @@ public class App extends Application {
       }
     });
     Scene scene = new Scene(resVBox, 350, 600);
+    scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
     primaryStage.setTitle("Reset Password");
     primaryStage.setScene(scene);
     primaryStage.show();
@@ -496,62 +548,94 @@ public class App extends Application {
   public void signUpScreen() {
     VBox newLayout = new VBox();
     newLayout.setSpacing(20);
-    newLayout.getStyleClass().add("root2");
+    // newLayout.getStyleClass().add("root2");
+    newLayout.setStyle("-fx-background-color:#CD9F61;");
 
-    Button backButton = new Button("<-");
+    Button backButton = new Button("");
     backButton.getStyleClass().add("backButtonStyle");
     backButton.setOnAction(e -> AcessPage());
 
     // Create a Title Bar with the Back Button
     HBox topBar = new HBox();
-    // topBar.setAlignment(Pos.CENTER_LEFT);
+
     topBar.setSpacing(10); // Add some spacing if needed
     topBar.setPadding(new Insets(10, 10, 10, 10)); // Padding for the top bar
     topBar.getChildren().add(backButton);
-    // newLayout.add(topBar, 0, 0, 2, 1); // Span the title bar across columns
 
-    VBox.setMargin(topBar, new Insets(0, 0, 0, 0));
     // Name
     Label nameClient = new Label("Name");
-    nameClient.getStyleClass().add("LabelStyling");
+    nameClient.getStyleClass().add("newLabelStyling");
     TextField nameClientField = new TextField();
     nameClientField.setPromptText("Enter your username");
 
     // hbox for name
-    HBox nameBox = new HBox(nameClient, nameClientField);
+    HBox nameLabelBox = new HBox(nameClient);
+    HBox nameBox = new HBox(nameClientField);
     nameBox.setSpacing(10);
+    nameLabelBox.setAlignment(Pos.CENTER);
+    nameBox.setAlignment(Pos.CENTER);
 
     // password
     Label passwordLabel1 = new Label("Password");
-    passwordLabel1.getStyleClass().add("LabelStyling");
-    passwordLabel1.setId("passwordLabel1");
+    passwordLabel1.getStyleClass().add("newLabelStyling");
+    // passwordLabel1.setStyle("-fx-text-fill:black;");
+    // passwordLabel1.setId("passwordLabel1");
     PasswordField passwordField1 = new PasswordField();
     passwordField1.setPromptText("Enter your new passsword");
 
-    HBox passwordBox = new HBox(passwordLabel1, passwordField1);
-
+    HBox passwordLabelBox = new HBox(passwordLabel1);
+    HBox passwordBox = new HBox(passwordField1);
+    passwordLabelBox.setAlignment(Pos.CENTER);
+    passwordBox.setAlignment(Pos.CENTER);
     // Email
-    Label emailClient = new Label("email");
-    emailClient.getStyleClass().add("LabelStyling");
+    Label emailClient = new Label("Email");
+    emailClient.getStyleClass().add("newLabelStyling");
     TextField emailClientField = new TextField();
     emailClientField.setPromptText("Enter your email");
 
-    HBox emailBox = new HBox(emailClient, emailClientField);
+    HBox emailLabelBox = new HBox(emailClient);
+    HBox emailBox = new HBox(emailClientField);
     emailBox.setSpacing(10);
+    emailLabelBox.setAlignment(Pos.CENTER);
+    emailBox.setAlignment(Pos.CENTER);
 
     // Label for identification
     Label idenLabel = new Label("These are the Questions For Password Recovery Next Time");
+    
+    HBox idenBox = new HBox(idenLabel);
+    idenLabel.setStyle("-fx-background-color:yellow; -fx-font-size:14px; -fx-font-weight: bold;");
+    idenBox.setAlignment(Pos.CENTER);
+
     Label schoolLabel = new Label("what was the name of your first high School?");
+    schoolLabel.getStyleClass().add("newLabelStyling");
+    HBox schoolBox = new HBox(schoolLabel);
+    schoolBox.setAlignment(Pos.CENTER);
+
     TextField schoolField = new TextField();
+    schoolField.setPromptText("movie name here");
+    HBox schoolFieldBox = new HBox(schoolField);
+    schoolFieldBox.setAlignment(Pos.CENTER);
 
     Label movieLabel = new Label("What is your favorite childhood movie?");
+    movieLabel.getStyleClass().add("newLabelStyling");
+    
+    HBox movieBox = new HBox(movieLabel);
+    movieBox.setAlignment(Pos.CENTER);
+
     TextField movieField = new TextField();
+    movieField.setPromptText("movie name here");
+    HBox movieFieldBox=new HBox(movieField);
+    movieFieldBox.setAlignment(Pos.CENTER);
 
     // button register
     Button registerButton = new Button("Register");
+    registerButton.setStyle("-fx-padding:10px; fx-background-radius:12px; -fx-border-radius:12px;");
+    HBox registerBox=new HBox(registerButton);
+    registerBox.setAlignment(Pos.CENTER);
 
-    newLayout.getChildren().addAll(topBar, nameBox, passwordBox, emailBox, idenLabel, schoolLabel, schoolField,
-        movieLabel, movieField, registerButton);
+    newLayout.getChildren().addAll(topBar, nameLabelBox, nameBox, passwordLabelBox, passwordBox, emailLabelBox,
+        emailBox, idenBox, schoolBox, schoolFieldBox,
+        movieBox, movieFieldBox, registerBox);
 
     registerButton.setOnAction(a -> {
 
@@ -560,7 +644,14 @@ public class App extends Application {
       String regEmail = emailClientField.getText().trim();
       String school = schoolField.getText().trim();
       String movie = movieField.getText().trim();
-
+      if (regName.isEmpty() || regPassword.isEmpty() || regEmail.isEmpty() || school.isEmpty() || movie.isEmpty()) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Input Error");
+        alert.setHeaderText("Missing Information");
+        alert.setContentText("All fields must be filled out.");
+        alert.showAndWait();
+        return;
+      }
       if (regName.contains("~") || regPassword.contains("~") || regEmail.contains("~") || school.contains("~")
           || movie.contains("~")) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -589,9 +680,9 @@ public class App extends Application {
 
     });
 
-    Scene signUpScene = new Scene(newLayout, 400, 550);
+    Scene signUpScene = new Scene(newLayout, 400, 600);
     signUpScene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-    System.out.println(getClass().getResource("style.css").toExternalForm());
+    // System.out.println(getClass().getResource("style.css").toExternalForm());
 
     // Stage stage = new Stage();
     primaryStage.setScene(signUpScene);
@@ -625,8 +716,13 @@ public class App extends Application {
     StackPane dieStackPane1 = new StackPane();
     dieStackPane1.getChildren().addAll(dietImageView1, dieLabel1);
     dieStackPane1.setOnMouseClicked(e -> {
-      calorieCal();
-
+      CalorieHandler calorieHandler = new CalorieHandler(this);
+      try {
+        calorieHandler.start(primaryStage);
+      } catch (Exception e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
     });
 
     Image dietImg2 = new Image(getClass().getResource("workout.jpeg").toExternalForm());
@@ -636,12 +732,12 @@ public class App extends Application {
     Label dieLabel2 = new Label("Workout videos");
     StackPane dieStackPane2 = new StackPane();
     dieStackPane2.getChildren().addAll(dietImageView2, dieLabel2);
-    
+
     dieStackPane2.setOnMouseClicked(o -> {
-      VideoHandler videoHandler=new VideoHandler(this);
-      try{
+      VideoHandler videoHandler = new VideoHandler(this);
+      try {
         videoHandler.start(primaryStage);
-      }catch (Exception e){
+      } catch (Exception e) {
         System.out.println(e.getMessage());
       }
 
@@ -654,13 +750,19 @@ public class App extends Application {
     Label dieLabel3 = new Label("30 day workout plan");
     StackPane dieStackPane3 = new StackPane();
     dieStackPane3.getChildren().addAll(dietImageView3, dieLabel3);
+
+    dieStackPane3.setOnMouseClicked(u -> {
+      HeavyApp thirtyDHeavyApp = new HeavyApp(this);
+      thirtyDHeavyApp.start(primaryStage);
+    });
+
     vBox.getChildren().addAll(mainLabel, dieStackPane1, dieStackPane2, dieStackPane3);
 
-    //styling of label
+    // styling of label
     dieLabel1.getStyleClass().add("properAppLabel");
     dieLabel2.getStyleClass().add("properAppLabel");
     dieLabel3.getStyleClass().add("properAppLabel");
-    //styling of images
+    // styling of images
     dietImageView1.setId("dietImageView1");
     dietImageView2.setId("dietImageView2");
     dietImageView3.setId("dietImageVie3");
@@ -685,104 +787,6 @@ public class App extends Application {
     primaryStage.show();
     // primaryStage.setFullScreen(true);
   }
-
-  public void calorieCal() {
-     // Back Button
-     Button backButton = new Button("Back");
-     backButton.getStyleClass().add("backButtonStyle");
-     backButton.setOnAction(e -> properApp());
-
-    // String sex, int age, int feet, int inches, int lbs, String activityLevel
-    Label genderLabel = new Label("Gender");
-    ToggleGroup toggleGroup = new ToggleGroup();
-    RadioButton maleButton = new RadioButton("male");
-    maleButton.setToggleGroup(toggleGroup);
-    RadioButton femaleButton = new RadioButton("female");
-    femaleButton.setToggleGroup(toggleGroup);
-
-    Label age = new Label("Age");
-    TextField ageField = new TextField();
-
-    Label feetLabel = new Label("Feet");
-    TextField feetField = new TextField();
-
-    Label inchesLabel = new Label("Inches");
-    TextField inchesField = new TextField();
-
-    Label lbsLabel = new Label("Lbs");
-    TextField lbsField = new TextField();
-
-    Label activityLevelLabel = new Label("Activity Level");
-    ComboBox<String> ActivityLevel = new ComboBox<>();
-    ActivityLevel.getItems().addAll( "Lightly Active", "Moderately Active", "Active", "Super Active");
-
-    Button submitDataBtn = new Button("Check");
-
-    // Cast the selected toggle to RadioButton and get its text
-
-    submitDataBtn.setOnAction(e -> {
-      try {
-        // Collect user input
-        Toggle selectedToggle = toggleGroup.getSelectedToggle();
-        if (selectedToggle == null) {
-          System.out.println("Please select a gender.");
-          return;
-        }
-        RadioButton selectedRadioButton = (RadioButton) selectedToggle;
-        String gender = selectedRadioButton.getText();
-
-        int userAge = Integer.parseInt(ageField.getText());
-        int userFeet = Integer.parseInt(feetField.getText());
-        int userInches = Integer.parseInt(inchesField.getText());
-        int userlbs = Integer.parseInt(lbsField.getText());
-        String activityString = ActivityLevel.getValue();
-
-        // Call the API
-        String result = NutritionAPI.getNutritionInfo(gender, userAge, userFeet, userInches, userlbs, activityString);
-
-        // Parse the result
-        if (result.startsWith("Error")) {
-          System.out.println(result); 
-          return;
-        }
-
-        // Extract specific data using NutritionDataHandler
-        String calories = NutritionDataHandler.extractCalorieNeeds(new JSONObject(result));
-        String bmi = NutritionDataHandler.extractBMI(new JSONObject(result));
-        String waterIntake = NutritionDataHandler.extractWaterIntake(new JSONObject(result));
-      //back button
-        Button backButton1 = new Button("Back");
-        backButton.getStyleClass().add("backButtonStyle");
-        backButton.setOnAction(t -> properApp());
-        // Update UI with extracted data
-        Label calorieLabel = new Label("Calories: " + calories);
-        Label bmiLabel = new Label("BMI: " + bmi);
-        Label waterLabel = new Label("Water Intake: " + waterIntake);
-
-        VBox resultVBox = new VBox(15,backButton1,calorieLabel, bmiLabel, waterLabel);
-        resultVBox.setAlignment(Pos.CENTER);
-
-        Scene resultScene = new Scene(resultVBox, 300, 200);
-        primaryStage.setScene(resultScene);
-        primaryStage.show();
-      } catch (Exception ex) {
-        ex.printStackTrace();
-        System.out.println("Please fill out all fields correctly.");
-      }
-    });
-
-    VBox calVBox = new VBox(15);
-    calVBox.setAlignment(Pos.CENTER);
-    calVBox.getChildren().addAll(backButton,genderLabel, maleButton, femaleButton, age, ageField, feetLabel, feetField,
-        inchesLabel, inchesField, lbsLabel, lbsField, activityLevelLabel, ActivityLevel, submitDataBtn);
-
-    Scene newsScene = new Scene(calVBox,350,600);
-    primaryStage.setScene(newsScene);
-    primaryStage.show();
-    // primaryStage.setFullScreen(true);
-  }
-
- 
 
   public static void main(String[] args) {
     launch();
